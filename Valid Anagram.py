@@ -1,3 +1,14 @@
+from collections import Counter
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        return Counter(s) == Counter(t)
+
+# Time: O(n+m)
+# Space: O(n+m)
+
+# Runtime: 32 ms, faster than 98.22% of Python3 online submissions for Valid Anagram.
+# Memory Usage: 14.5 MB, less than 48.96% of Python3 online submissions for Valid Anagram.
+
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
         h = {}
