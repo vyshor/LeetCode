@@ -1,5 +1,23 @@
 class Solution:
     def maxArea(self, height: List[int]) -> int:
+        left, right = 0, len(height)-1
+        area = (right - left) * min(height[left], height[right])
+        while right > left:
+            if height[left] > height[right]:
+                right -= 1
+            else:
+                left += 1
+            area = max(area, (right - left) * min(height[left], height[right]))
+        return area
+
+# Time: O(n)
+# Space: O(1)
+
+# Runtime: 176 ms, faster than 47.36% of Python3 online submissions for Container With Most Water.
+# Memory Usage: 16.6 MB, less than 35.76% of Python3 online submissions for Container With Most Water.
+
+class Solution:
+    def maxArea(self, height: List[int]) -> int:
         max1 = 0
         max2 = 0
         for idx
