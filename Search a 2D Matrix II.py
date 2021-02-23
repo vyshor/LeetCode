@@ -1,3 +1,27 @@
+
+import bisect
+import numpy as np
+
+class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        closestSmallest = bisect.bisect_left(matrix[0], target)
+        if len(matrix[0]) != closestSmallest and matrix[0][closestSmallest] == target:
+            return True
+        else:
+            m = np.transpose(np.array(matrix))
+            for col in m[:closestSmallest+1]:
+                find = bisect.bisect_left(col, target)
+                if len(col) != find and col[find] == target:
+                    return True
+        return False
+
+
+# Time: O(nlgm)
+# Space: O(n*n)
+# Runtime: 472 ms, faster than 5.33% of Python3 online submissions for Search a 2D Matrix II.
+# Memory Usage: 37 MB, less than 5.73% of Python3 online submissions for Search a 2D Matrix II.
+
+
 import heapq
 
 
