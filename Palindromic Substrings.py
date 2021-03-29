@@ -43,3 +43,25 @@ class Solution:
 # Space: O(n)
 # Runtime: 44 ms, faster than 97.91% of Python3 online submissions for Palindromic Substrings.
 # Memory Usage: 14 MB, less than 50.00% of Python3 online submissions for Palindromic Substrings.
+
+class Solution:
+    def countSubstrings(self, s: str) -> int:
+        ss = '$'
+        for c in s:
+            ss += c + '#'
+        ss = ss[:-1] + '@'
+        count = 0
+
+        for mirror in range(1, len(ss)-1):
+            offset = 0
+            while ss[mirror+offset] == ss[mirror-offset]:
+                if ss[mirror+offset].isalnum():
+                    count += 1
+                offset += 1
+        return count
+
+# Time: O(n^2)
+# Space: O(1)
+
+# Runtime: 224 ms, faster than 52.46% of Python3 online submissions for Palindromic Substrings.
+# Memory Usage: 14.3 MB, less than 73.46% of Python3 online submissions for Palindromic Substrings.
