@@ -1,3 +1,30 @@
+class Solution:
+    def searchRange(self, nums: List[int], target: int) -> List[int]:
+        mmax, mmin = -1, 10**5 + 1
+        def processRange(f, l):
+            nonlocal mmax, mmin
+            if l < f:
+                return
+            m = (f+l)//2
+            if target == nums[m]:
+                mmax = max(mmax, m)
+                mmin = min(mmin, m)
+                if f != l:
+                    processRange(f,m-1)
+                    processRange(m+1,l)
+            elif target > nums[m] and f != l:
+                processRange(m+1,l)
+            elif f != l:
+                processRange(f,m-1)
+        processRange(0, len(nums)-1)
+        return [mmin, mmax] if mmax != -1 else [-1, -1]
+
+# Time: O(lgn)
+# Space: O(1)
+
+# Runtime: 92 ms, faster than 12.99% of Python3 online submissions for Find First and Last Position of Element in Sorted Array.
+# Memory Usage: 15.3 MB, less than 79.86% of Python3 online submissions for Find First and Last Position of Element in Sorted Array.
+
 from bisect import bisect_left, bisect_right
 class Solution:
     def searchRange(self, nums: List[int], target: int) -> List[int]:
