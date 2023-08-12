@@ -16,16 +16,15 @@ class AllOne:
 
         if new_count not in self.count_to_keys:
             self.count_to_keys[new_count] = set()
-        if prev_count not in self.count_to_keys:
-            self.count_to_keys[prev_count] = set()
 
         self.count_to_keys[new_count].add(key)
-        if key in self.count_to_keys[prev_count]:
+        if prev_count != 0 and key in self.count_to_keys[prev_count]:
             self.count_to_keys[prev_count].remove(key)
-
-        if self.min_count == prev_count:
             if len(self.count_to_keys[prev_count]) == 0:
-                self.min_count = new_count
+                del self.count_to_keys[prev_count]
+
+        if self.min_count == prev_count and prev_count not in self.count_to_keys:
+            self.min_count = new_count
 
         if new_count > self.max_count:
             self.max_count = new_count
@@ -38,28 +37,24 @@ class AllOne:
         new_count = prev_count - 1
         self.key_to_count[key] = new_count
 
-        if new_count not in self.count_to_keys:
+        if new_count not in self.count_to_keys and new_count != 0:
             self.count_to_keys[new_count] = set()
-        if prev_count not in self.count_to_keys:
-            self.count_to_keys[prev_count] = set()
 
-        self.count_to_keys[new_count].add(key)
+        if new_count != 0:
+            self.count_to_keys[new_count].add(key)
         if key in self.count_to_keys[prev_count]:
             self.count_to_keys[prev_count].remove(key)
-
-        if self.max_count == prev_count:
             if len(self.count_to_keys[prev_count]) == 0:
-                self.max_count = new_count
+                del self.count_to_keys[prev_count]
+
+        if self.max_count == prev_count and prev_count not in self.count_to_keys:
+            self.max_count = new_count
 
         if new_count == 0:
             del self.key_to_count[key]
             # Find the new min_count
             if self.min_count == prev_count and len(self.key_to_count) != 0:
-                valid_counts = []
-                for count, keys in self.count_to_keys.items():
-                    if len(keys) > 0 and count != 0:
-                        valid_counts.append(count)
-                self.min_count = min(valid_counts)
+                self.min_count = min(self.count_to_keys.keys())
 
         if new_count < self.min_count and new_count != 0:
             self.min_count = new_count
