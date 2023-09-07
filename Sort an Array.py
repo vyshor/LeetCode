@@ -28,3 +28,29 @@ class Solution:
             return merged
 
         return recurSort(nums)
+
+# class Solution:
+#     def sortArray(self, nums: List[int]) -> List[int]:
+#         def quickSort(start, end):
+#             if start >= end:
+#                 return
+#
+#             partition = end
+#             i, j = start, start
+#             while i < end:
+#                 if nums[i] < nums[partition]:
+#                     nums[i], nums[j] = nums[j], nums[i]
+#                     j += 1
+#                     i += 1
+#                 else:
+#                     i += 1
+#             nums[j], nums[partition] = nums[partition], nums[j]
+#
+#             # print(i, j)
+#             # print(nums)
+#
+#             quickSort(start, j - 1)
+#             quickSort(j + 1, end)
+#
+#         quickSort(0, len(nums) - 1)
+#         return nums
