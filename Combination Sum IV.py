@@ -1,12 +1,13 @@
 class Solution:
     def combinationSum4(self, nums: List[int], target: int) -> int:
         n = len(nums)
-        q = [-target]
         dp = {-target: 1}
         ans = 0
 
-        while q:
-            v = heapq.heappop(q)
+        for v in range(-target, 0):
+            if v not in dp:
+                continue
+
             count = dp[v]
 
             for num in nums:
@@ -14,7 +15,6 @@ class Solution:
                 if summ < 0:
                     if summ not in dp:
                         dp[summ] = count
-                        heapq.heappush(q, summ)
                     else:
                         dp[summ] += count
 
@@ -22,6 +22,31 @@ class Solution:
                     ans += count
 
         return ans
+
+# class Solution:
+#     def combinationSum4(self, nums: List[int], target: int) -> int:
+#         n = len(nums)
+#         q = [-target]
+#         dp = {-target: 1}
+#         ans = 0
+#
+#         while q:
+#             v = heapq.heappop(q)
+#             count = dp[v]
+#
+#             for num in nums:
+#                 summ = num + v
+#                 if summ < 0:
+#                     if summ not in dp:
+#                         dp[summ] = count
+#                         heapq.heappush(q, summ)
+#                     else:
+#                         dp[summ] += count
+#
+#                 elif summ == 0:
+#                     ans += count
+#
+#         return ans
 
 # class Solution:
 #     def combinationSum4(self, nums: List[int], target: int) -> int:
