@@ -10,14 +10,32 @@ class Solution:
             return []
 
         ans = []
+        q = [root]
 
-        def printNode(node):
-            nonlocal ans
+        while q:
+            node = q.pop()
             ans.append(node.val)
-            if node.left:
-                printNode(node.left)
             if node.right:
-                printNode(node.right)
+                q.append(node.right)
+            if node.left:
+                q.append(node.left)
 
-        printNode(root)
         return ans
+#
+# class Solution:
+#     def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+#         if root is None:
+#             return []
+#
+#         ans = []
+#
+#         def printNode(node):
+#             nonlocal ans
+#             ans.append(node.val)
+#             if node.left:
+#                 printNode(node.left)
+#             if node.right:
+#                 printNode(node.right)
+#
+#         printNode(root)
+#         return ans
