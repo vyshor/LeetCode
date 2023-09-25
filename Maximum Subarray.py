@@ -13,6 +13,15 @@ class Solution:
                 summ = 0
         return ans
 
+# class Solution:
+#     def maxSubArray(self, nums: List[int]) -> int:
+#         dp = list(nums)
+#         n = len(nums)
+#
+#         for i in range(1, n):
+#             dp[i] = max(dp[i], dp[i - 1] + nums[i])
+#
+#         return max(dp)
 
 # class Solution:
 #     def maxSubArray(self, nums: List[int]) -> int:
