@@ -1,13 +1,35 @@
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
-        dp = {}
-        dp[(0, 0)] = 1
-        for x in range(0, m):
-            for y in range(0, n):
-                if not (x == y and x == 0):
-                    dp[(x, y)] = (dp[(x - 1, y)] if dp.get((x - 1, y)) else 0) + (
-                        dp[(x, y - 1)] if dp.get((x, y - 1)) else 0)
-        return dp[(m - 1, n - 1)]
+        if n > m:
+            return self.uniquePaths(n, m)
+
+        dp = [0] * n
+        dp[0] = 1
+
+        for i in range(1, m):
+            for j in range(i, -1, -1):
+
+                if j < n and j - 1 >= 0:
+                    dp[j] += dp[j - 1]
+
+        for i in range(1, n):
+            for j in range(n - 1, i - 1, -1):
+
+                if j < n and j - 1 >= 0:
+                    dp[j] += dp[j - 1]
+
+        return dp[-1]
+
+# class Solution:
+#     def uniquePaths(self, m: int, n: int) -> int:
+#         dp = {}
+#         dp[(0, 0)] = 1
+#         for x in range(0, m):
+#             for y in range(0, n):
+#                 if not (x == y and x == 0):
+#                     dp[(x, y)] = (dp[(x - 1, y)] if dp.get((x - 1, y)) else 0) + (
+#                         dp[(x, y - 1)] if dp.get((x, y - 1)) else 0)
+#         return dp[(m - 1, n - 1)]
 
 # It must only move right m times
 # And it must only move down n times
