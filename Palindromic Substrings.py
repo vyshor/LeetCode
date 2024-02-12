@@ -65,3 +65,27 @@ class Solution:
 
 # Runtime: 224 ms, faster than 52.46% of Python3 online submissions for Palindromic Substrings.
 # Memory Usage: 14.3 MB, less than 73.46% of Python3 online submissions for Palindromic Substrings.
+
+class Solution:
+    def countSubstrings(self, s: str) -> int:
+        n = len(s)
+        dp = {}
+        count = 0
+
+        def checkPair(i, j):
+            nonlocal dp, s
+            if (i, j) not in dp:
+                dp[(i, j)] = dp[(j, i)] = s[i] == s[j]
+            return dp[(i, j)]
+
+        def checkPalindrome(i, j):
+            nonlocal dp, s, count
+            if 0 <= i < n and 0 <= j < n and checkPair(i, j):
+                count += 1
+                checkPalindrome(i - 1, j + 1)
+
+        for i in range(n):
+            checkPalindrome(i, i)
+            checkPalindrome(i, i + 1)
+
+        return count
