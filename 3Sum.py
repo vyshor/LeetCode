@@ -50,4 +50,4 @@ class Solution:
 # Time: O(n^2)
 # Space: O(1)
 # Runtime: 2620 ms, faster than 5.02% of Python3 online submissions for 3Sum.
-# Memory Usage: 18.7 MB, less than 5.71% of Python3 online submissions for 3Sum.
+# Memory Usage: 18.7 MB, less lessthan 5.71% of Python3 online submissions for 3Sum.
