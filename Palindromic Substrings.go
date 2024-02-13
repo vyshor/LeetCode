@@ -14,7 +14,7 @@ func countSubstrings(s string) int {
     count := 0
     var checkPalindrome func(i, j int);
     checkPalindrome = func(i, j int) {
-        if i >= 0 && i < n && j >= 0 && j < n && checkMatch(i, j) {
+        if i >= 0 && j < n && checkMatch(i, j) {
             count += 1
             checkPalindrome(i-1, j+1)
         }
