@@ -4,6 +4,30 @@
 #         self.val = val
 #         self.next = next
 class Solution:
+    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        dummyHead = ListNode(next=head)
+        m = 1
+        pt = head
+        while pt.next is not None:
+            pt = pt.next
+            m += 1
+
+        m -= n
+        pt = dummyHead
+        while m > 0:
+            pt = pt.next
+            m -= 1
+        pt.next = pt.next.next
+
+        return dummyHead.next
+
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
     def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
         dummyHead = ListNode(next=head)
         before_start = dummyHead
