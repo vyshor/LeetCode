@@ -25,6 +25,28 @@ class Solution:
 
         return False
 
+
+# class Solution:
+#     def hasCycle(self, head: Optional[ListNode]) -> bool:
+#         if head is None or head.next is None:
+#             return False
+#
+#         fast, slow = head.next, head
+#         while fast is not None:
+#             fast = fast.next
+#             slow = slow.next
+#
+#             if fast == slow:
+#                 return True
+#
+#             if fast is not None:
+#                 fast = fast.next
+#
+#                 if fast == slow:
+#                     return True
+#
+#         return False
+
 # class Solution:
 #     def hasCycle(self, head: ListNode) -> bool:
 #         turtle = head
