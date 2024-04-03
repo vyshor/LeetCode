@@ -1,5 +1,38 @@
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
+        visited = set()
+        n = len(board)
+        m = len(board[0])
+        n_word = len(word)
+
+        def find(i, j, k):
+            nonlocal board, visited, word
+            if k == n_word:
+                return True
+
+            for (x, y) in [(i - 1, j), (i + 1, j), (i, j - 1), (i, j + 1)]:
+                if 0 <= x < n and 0 <= y < m and (x, y) not in visited and board[x][y] == word[k]:
+                    visited.add((x, y))
+                    ans = find(x, y, k + 1)
+                    if ans:
+                        return True
+                    visited.remove((x, y))
+
+            return False
+
+        for i in range(n):
+            for j in range(m):
+                if board[i][j] == word[0]:
+                    visited.add((i, j))
+                    ans = find(i, j, 1)
+                    if ans:
+                        return True
+                    visited.remove((i, j))
+        return False
+
+
+class Solution:
+    def exist(self, board: List[List[str]], word: str) -> bool:
         m = len(board)
         n = len(board[0])
         nw = len(word)
@@ -46,6 +79,6 @@ class Solution:
                 return False
             q = new_q
 
-        return True
+        return Trueue
 
 
