@@ -10,12 +10,24 @@ class Solution:
         :type node: ListNode
         :rtype: void Do not return anything, modify node in-place instead.
         """
-        prev, pt = node, node.next
-        while 1:
-            prev.val = pt.val
+        prev = None
+        while node.next is not None:
+            node.val = node.next.val
+            prev, node = node, node.next
+        prev.next = None
 
-            if pt.next is None:
-                prev.next = None
-                return
-
-            prev, pt = pt, pt.next
+# class Solution:
+#     def deleteNode(self, node):
+#         """
+#         :type node: ListNode
+#         :rtype: void Do not return anything, modify node in-place instead.
+#         """
+#         prev, pt = node, node.next
+#         while 1:
+#             prev.val = pt.val
+#
+#             if pt.next is None:
+#                 prev.next = None
+#                 return
+#
+#             prev, pt = pt, pt.next
