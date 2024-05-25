@@ -20,3 +20,32 @@ class Solution:
             ans *= state0 + state1
         return ans - 1
 
+
+# class Solution:
+#     def beautifulSubsets(self, nums: List[int], k: int) -> int:
+#         seen = {}
+#         n = len(nums)
+#         count = 0
+#
+#         def explore(i):
+#             nonlocal seen, n, count
+#             if i == n:
+#                 if seen:
+#                     count += 1
+#                 return
+#
+#             explore(i + 1)
+#
+#             if nums[i] + k not in seen and nums[i] - k not in seen:
+#                 if nums[i] in seen:
+#                     seen[nums[i]] += 1
+#                 else:
+#                     seen[nums[i]] = 1
+#
+#                 explore(i + 1)
+#                 seen[nums[i]] -= 1
+#                 if seen[nums[i]] == 0:
+#                     del seen[nums[i]]
+#
+#         explore(0)
+#         return count
