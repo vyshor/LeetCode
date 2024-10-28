@@ -1,38 +1,71 @@
 class Solution:
     def longestSquareStreak(self, nums: List[int]) -> int:
-        dp = set(nums)
-        maxx = -1
-        for num in set(nums):
-            if num not in dp:
-                continue
+        nums = list(set(nums))
+        n = len(nums)
+        terms = {v: i for i, v in enumerate(nums)}
+        parents = [i for i in range(n)]
+        counts = [1] * n
 
-            length = 1
-            dp.remove(num)
+        def find(i):
+            nonlocal parents
+            if parents[i] != i:
+                return find(parents[i])
+            return i
 
-            left = num
-            while True:
-                sqrt = int(math.sqrt(left))
-                root = sqrt ** 2
-                if root == left and sqrt in dp:
-                    left = sqrt
-                    length += 1
-                    dp.remove(sqrt)
-                else:
-                    break
+        def union(i, j):
+            nonlocal parents, counts
+            parent_i = find(i)
+            parent_j = find(j)
+            if parent_i != parent_j:
+                parents[parent_i] = parent_j
+                counts[parent_j] += counts[parent_i]
+                counts[parent_i] = 0
 
-            right = num
-            while True:
-                sq = right ** 2
-                if sq in dp:
-                    right = sq
-                    length += 1
-                    dp.remove(sq)
-                else:
-                    break
+        for i, num in enumerate(nums):
+            nxt = num * num
+            if nxt in terms:
+                union(i, terms[nxt])
 
-            if length > 1:
-                maxx = max(maxx, length)
+        maxx = max(counts)
+        if maxx < 2:
+            return -1
         return maxx
+
+# class Solution:
+#     def longestSquareStreak(self, nums: List[int]) -> int:
+#         dp = set(nums)
+#         maxx = -1
+#         for num in set(nums):
+#             if num not in dp:
+#                 continue
+#
+#             length = 1
+#             dp.remove(num)
+#
+#             left = num
+#             while True:
+#                 sqrt = int(math.sqrt(left))
+#                 root = sqrt ** 2
+#                 if root == left and sqrt in dp:
+#                     left = sqrt
+#                     length += 1
+#                     dp.remove(sqrt)
+#                 else:
+#                     break
+#
+#             right = num
+#             while True:
+#                 sq = right ** 2
+#                 if sq in dp:
+#                     right = sq
+#                     length += 1
+#                     dp.remove(sq)
+#                 else:
+#                     break
+#
+#             if length > 1:
+#                 maxx = max(maxx, length)
+#         return maxx
 
 # class Solution:
 #     def longestSquareStreak(self, nums: List[int]) -> int:
