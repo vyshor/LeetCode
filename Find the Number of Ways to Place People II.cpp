@@ -2,6 +2,33 @@ class Solution {
 public:
     int numberOfPairs(vector<vector<int>>& points) {
         sort(points.begin(), points.end(), [](const vector<int>& a, const vector<int>& b) {
+            return  (a[0] < b[0]) || (a[0] == b[0] && a[1] > b[1]);
+        });
+        int n = points.size();
+        int count = 0;
+        for (int i = 0; i < n-1; i++) {
+            // cout << points[i][0] << " " << points[i][1] << endl;
+            int yMax = points[i][1] + 1;
+            int yMin = INT_MIN;
+
+            for (int j = i+1; j < n; j++) {
+                auto& pt = points[j];
+                if (pt[1] < yMax && pt[1] > yMin) {
+                    // cout << "y compare: " << pt[1] << " " << yMax << endl;
+                    yMin = pt[1];
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+};
+
+
+class Solution {
+public:
+    int numberOfPairs(vector<vector<int>>& points) {
+        sort(points.begin(), points.end(), [](const vector<int>& a, const vector<int>& b) {
             return  (a[1] > b[1]) || (a[1] == b[1] && a[0] < b[0]);
         });
         int n = points.size();
