@@ -5,27 +5,23 @@ public:
 
         int m = maxPts+2;
         vector<double> dp(m, 0.);
+        dp[0] = 1.0;
+        dp[1] = -1.0;
 
-        double curr = 1.0, change = 0.0;
+        double change = 0.0;
         for (int i = 0; i < k; i++) {
             // Diff array concept
-            // cout << "i=" << i << " dp[i]= " << dp[i % m] << " curr=" << curr  << " change=" << change << endl;
             change += dp[i % m];
-            curr += change;
-            double chance = curr / double(maxPts);
-            curr = 0.;
+            double chance = change / double(maxPts);
             dp[i % m] = 0.;
             dp[(i+maxPts+1) % m] -= chance;
             dp[(i+1) % m] += chance;
         }
 
         double ans = 0.;
-        curr = change;
-        // cout << "Change=" << change << endl;
         for (int i = k; i < n+1; i++) {
-            // cout << "i=" << i << " dp[i]= " << dp[i % m] << " ans=" << ans << endl;
-            curr += dp[i % m];
-            ans += curr;
+            change += dp[i % m];
+            ans += change;
         }
         return ans;
     }
