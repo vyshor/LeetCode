@@ -8,9 +8,8 @@ public:
         for (int i = 0; i < n; i++) {
             int ch = word[i] - 97;
             auto& q = prev_idx[ch];
-            while (q.size() >= 2) {
-                if (i - q[1] >= 3) q.pop_front();
-                else break;
+            while (q.size() >= 2 && i - q[1] >= 3) {
+                q.pop_front();
             }
 
             dp[i+1] = dp[i];
