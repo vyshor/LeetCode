@@ -13,8 +13,7 @@ public:
             return parent;
         };
 
-        auto uni = [&parents, &minn, &ffind] (int i, int j) {
-            int parent_i = ffind(i);
+        auto uni = [&parents, &minn, &ffind] (int parent_i, int j) {
             int parent_j = ffind(j);
             if (parent_i != parent_j) {
                 parents[parent_j] = parent_i;
@@ -24,11 +23,10 @@ public:
 
         for (auto& road: roads) {
             int a = road[0], b = road[1], dist = road[2];
-            int parent_a = ffind(a), parent_b = ffind(b);
+            int parent_a = ffind(a);
 
             minn[parent_a] = min(minn[parent_a], dist);
-            minn[parent_b] = min(minn[parent_b], dist);
-            uni(parent_a, parent_b);
+            uni(parent_a, b);
         }
         return minn[ffind(1)];
     }
