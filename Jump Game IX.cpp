@@ -2,6 +2,32 @@ class Solution {
 public:
     vector<int> maxValue(vector<int>& nums) {
         int n = nums.size();
+        vector<int> ans(n);
+        ans[0] = nums[0];
+        int maxx = nums[0];
+        for (int i = 1; i < n; ++i) {
+            int num = nums[i];
+            maxx = max(maxx, num);
+            ans[i] = maxx;
+        }
+
+        int minn = nums[n-1];
+        maxx = ans[n-1];
+        for (int i = n-2; i >= 0; i--) {
+            if (ans[i] > minn) {
+                ans[i] = max(ans[i], ans[i+1]);
+            }
+            minn = min(minn, nums[i]);
+        }
+        return ans;
+    }
+};
+
+
+class Solution {
+public:
+    vector<int> maxValue(vector<int>& nums) {
+        int n = nums.size();
         vector<int> parents(n);
         std::iota(parents.begin(), parents.end(), 0);
 
