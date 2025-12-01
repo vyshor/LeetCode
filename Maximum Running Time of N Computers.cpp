@@ -1,6 +1,30 @@
 class Solution {
 public:
     long long maxRunTime(int n, vector<int>& batteries) {
+        sort(batteries.begin(), batteries.end(), std::greater<>{});
+        int n2 = batteries.size();
+        if (n > n2) return 0;
+
+        long long N = n;
+        long long total = 0;
+        for (long long battery: batteries) {
+            total += battery;
+        }
+        for (int i{0}; i < n2; ++i) {
+            long long avg = total / N;
+            long long largest = batteries[i];
+            if (largest <= avg) return avg;
+            total -= largest;
+            --N;
+        }
+
+        return 0;
+    }
+};
+
+class Solution {
+public:
+    long long maxRunTime(int n, vector<int>& batteries) {
         int n2 = batteries.size();
         if (n > n2) return 0;
 
