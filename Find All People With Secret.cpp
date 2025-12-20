@@ -1,3 +1,77 @@
+bool MeetingComp(const vector<int>& a, const vector<int>& b) {
+    return a[2] < b[2];
+}
+
+class Solution {
+public:
+    vector<int> findAllPeople(int n, vector<vector<int>>& meetings, int firstPerson) {
+        vector<int> parents(n+1);
+        vector<int> secrets(n+1);
+        std::iota(parents.begin(), parents.end(), 0);
+        secrets[0] = 1;
+        secrets[firstPerson] = 1;
+
+        function<int(int)> find;
+        find = [&] (int i) -> int {
+            if (parents[i] == i) return i;
+            int new_parent = find(parents[i]);
+            parents[i] = new_parent;
+            return new_parent;
+        };
+
+        auto uni = [&] (int i, int j) {
+            int parent_i = find(i);
+            int parent_j = find(j);
+            if (parent_i == parent_j) return;
+            parents[parent_j] = parent_i;
+            secrets[parent_i] |= secrets[parent_j];
+        };
+
+        std::sort(meetings.begin(), meetings.end(), MeetingComp);
+
+        unordered_set<int> changed_nodes;
+        int timestamp = 0;
+        for (auto& meeting: meetings) {
+            int i = meeting[0];
+            int j = meeting[1];
+            int ts = meeting[2];
+
+            // std::cout << "Ts: " << ts << '\n';
+
+            if (ts != timestamp) {
+                // End of previous round
+                for (int node: changed_nodes) {
+                    secrets[node] |= secrets[find(node)];
+                }
+                for (int node: changed_nodes) {
+                    parents[node] = node;
+                }
+                unordered_set<int> new_nodes;
+                changed_nodes.swap(new_nodes);
+                timestamp = ts;
+            }
+
+            uni(i, j);
+            changed_nodes.insert(i);
+            changed_nodes.insert(j);
+        }
+
+        for (int node: changed_nodes) {
+            secrets[node] |= secrets[find(node)];
+        }
+
+        vector<int> ans;
+        ans.reserve(n);
+        for (int i{0}; i < n+1; ++i) {
+            if (secrets[i]) {
+                ans.push_back(i);
+            }
+        }
+        return ans;
+    }
+};
+
+
 class Solution {
 public:
     vector<int> findAllPeople(int n, vector<vector<int>>& meetings, int firstPerson) {
